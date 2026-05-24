@@ -24,7 +24,7 @@ body {
     background: linear-gradient(to right, #F2F5FF, #E8E2FF);
 }
 
-/* START THE CODE BELOW */
+
 
 .container {
     background: white;
@@ -39,12 +39,13 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    
 }
 
 .title__icon {
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     fill: white;
-    width: 45px;
+    min-width: 45px;
     height: 45px;
     padding: 8px;
     border-radius: 20%;
@@ -52,10 +53,198 @@ body {
 
 }
 
-
 .title__text {
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: bold;
+}
+
+.form-container {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-and-image {
+    display: flex;
+    margin-top: 24px;
+    gap: 32px;
+}
+
+.form-container__prompt-input {
+    padding: 12px 15px;
+    border: 2px solid var(--gray-border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    resize: none;
+    transition: 150ms ease-in;
+    outline: solid 3px transparent;
+    background: var(--gray-bg-color);
+}
+
+.form-container__prompt-input:focus {
+    outline: solid 3px var(--light-secondary-color);
+}
+
+.form-container__dropdown-group {
+    margin-top: 8px;
+    display: flex;
+    gap: 12px;
+}
+.form-container__dropdown {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid var(--gray-border-color);
+    border-radius: 8px;
+    background: var(--gray-bg-color);
+    font-size: 16px;
+    width: 100%;
+    transition: 150ms ease-in;
+    outline: solid 3px transparent;
+}
+
+.form-container__dropdown:focus {
+    outline: solid 3px var(--light-secondary-color);
+}
+
+.form-container__button {
+    margin-top: 25px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    padding: 8px 12px;
+    fill: white;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    outline: solid 3px transparent;
+    transition: 150ms ease;
+}
+
+.form-container__button:focus {
+    outline: solid 3px var(--light-secondary-color);
+}
+
+.form-container__button:hover {
+    box-shadow: 0px 0px 10px var(--light-secondary-color);
+}
+
+.image-container__loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+.image-container__loading-disc {
+    width: 1000px;
+    height: 100px;
+}
+.image-container__loading-text {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+
+
+
+
+.image-container {
+    aspect-ratio: 1/1;
+    width: 65%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    position: relative;
+}
+
+.image-container:hover .image-container__image-result {
+    transform: scale(1.05);
+}
+
+.image-container:hover .image-container__layer {
+    opacity: 1;
+}
+.image-container:hover .image-container__download-button {
+    opacity: 1;
+    bottom: 15px;
+}
+
+.image-container__image-result {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 300ms ease;
+}
+
+.image-container__layer {
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    bottom: 0;
+    background: linear-gradient(to top, 
+            rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    opacity: 0;
+    transition: 300ms ease;
+}
+
+.image-container__download-button {
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    background: rgba(255, 255, 255, 0.25);
+    fill: white;
+    justify-content: center;
+    border: none;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    opacity: 0;
+    transition: 500ms ease;
+}
+
+.image-container.loading {
+    box-shadow: none;
+    background: var(--gray-bg-color);
+}
+
+.image-container.loading .image-container__layer,
+.image-container.loading .image-container__download-button {
+    display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+    .container {
+        overflow-y: scroll;
+        max-height: 90%;
+    }
+    
+    .form-and-image {
+        flex-direction: column;
+    }
+
+    .image-container {
+        width: 100%;
+    }
+
+    .image-container__download-button {
+        margin: 10px;
+        transform: scale(1.1);
+    }
 }
