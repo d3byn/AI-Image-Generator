@@ -1,4 +1,4 @@
-const API_KEY = 'a1530bedd0msh34898b2f1df6118p1420fajsnc13eae01c858';
+const API_KEY = 'YOUR_API_KEY';
 const API_URL ='https://ai-text-to-image-generator-flux-free-api.p.rapidapi.com/aaaaaaaaaaaaaaaaaiimagegenerator/quick.php';
 
 const imageContainer = document.getElementById('imageContainer');
