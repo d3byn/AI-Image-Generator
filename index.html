@@ -5,94 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Image Generator</title>
-    <!-- Link to CSS -->
     <link rel="stylesheet" href="style.css">
-    <!-- Link to Box Icons -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 
 <body>
-
-    <!-- CONTAINER -->
     <main class="container">
-        <!-- TITLE -->
         <h1 class="title">
-            <box-icon class="title__icon" type='solid' name='magic-wand'></box-icon>
-            <span class="title__text">AI Image Generator</span>
+            <box-icon class="title__icon" type="solid" name="magic-wand"></box-icon>
+            <span class="title__text">
+                AI Image Generator
+            </span>
         </h1>
-
         <div class="form-and-image">
-            <!-- FORM CONTAINER -->
             <section class="form-container">
-                <!-- PROMPT INPUT -->
                 <textarea class="form-container__prompt-input" id="prompt" rows="5"
                     placeholder="Describe your image..."></textarea>
                 <div class="form-container__dropdown-group">
-                    <!-- DROPDOWN STYLE -->
                     <select class="form-container__dropdown" id="dropdownStyles">
-                        <option value="realistic">Realistic</option>
-                        <option value="anime">Anime</option>
-                        <option value="flux-schnell">Flux Schnell</option>
+                        <option value="realism">
+                            Realism
+                        </option>
+                        <option value="anime">
+                            Anime
+                        </option>
                     </select>
-                    <!-- DROPDOWN RATIO -->
                     <select class="form-container__dropdown" id="dropdownRatio">
-                        <option value="1:1">1:1</option>
-                        <option value="16:9">16:9</option>
-                        <option value="9:16">9:16</option>
+                        <option value="square_1_1">
+                            1:1
+                        </option>
+                        <option value="landscape_16_9">
+                            16:9
+                        </option>
+                        <option value="portrait_9_16">
+                            9:16
+                        </option>
                     </select>
                 </div>
-                <!-- GENERATE IMAGE BUTTON -->
-                <button class="form-container__button" onclick="generateImage()">
-                    <box-icon type='solid' name='magic-wand'></box-icon>
+                <button type="button" class="form-container__button" onclick="generateImage()">
+                    <box-icon type="solid" name="magic-wand"></box-icon>
                     Generate Image
                 </button>
             </section>
-
-            <!-- IMAGE CONTAINER -->
             <section class="image-container" id="imageContainer">
-                <!-- IMAGE RESULT -->
-                <img class="image-container__image-result" id="imageResult" src="example.jpeg">
-
+                <img class="image-container__image-result" id="imageResult" alt="Generated AI Image"
+                    src="/assets/example.jpeg">
                 <div class="image-container__layer"></div>
-                <button class="image-container__download-button" onclick="downloadImage()">
-                    <box-icon name='download'></box-icon>
+                <button type="button" class="image-container__download-button" onclick="downloadImage()">
+                    <box-icon name="download"></box-icon>
                 </button>
-
-                <!-- LOADING CONTAINER -->
                 <div class="image-container__loading-container">
                     <svg class="image-container__loading-disc" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="5" r="15" cx="35" cy="100">
+                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="10" r="15" cx="35" cy="100">
                             <animate attributeName="cx" calcMode="spline" dur="2" values="35;165;165;35;35"
                                 keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1" repeatCount="indefinite" begin="0">
                             </animate>
                         </circle>
-                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="5" opacity=".8" r="15" cx="35" cy="100">
+                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="10" opacity=".8" r="15" cx="35" cy="100">
                             <animate attributeName="cx" calcMode="spline" dur="2" values="35;165;165;35;35"
                                 keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1" repeatCount="indefinite"
                                 begin="0.05"></animate>
                         </circle>
-                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="5" opacity=".6" r="15" cx="35" cy="100">
+                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="10" opacity=".6" r="15" cx="35" cy="100">
                             <animate attributeName="cx" calcMode="spline" dur="2" values="35;165;165;35;35"
                                 keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1" repeatCount="indefinite"
                                 begin=".1"></animate>
                         </circle>
-                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="5" opacity=".4" r="15" cx="35" cy="100">
+                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="10" opacity=".4" r="15" cx="35" cy="100">
                             <animate attributeName="cx" calcMode="spline" dur="2" values="35;165;165;35;35"
                                 keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1" repeatCount="indefinite"
                                 begin=".15"></animate>
                         </circle>
-                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="5" opacity=".2" r="15" cx="35" cy="100">
+                        <circle fill="#2356FF" stroke="#2356FF" stroke-width="10" opacity=".2" r="15" cx="35" cy="100">
                             <animate attributeName="cx" calcMode="spline" dur="2" values="35;165;165;35;35"
                                 keySplines="0 .1 .5 1;0 .1 .5 1;0 .1 .5 1;0 .1 .5 1" repeatCount="indefinite"
                                 begin=".2"></animate>
                         </circle>
                     </svg>
-                    <span class="image-container__loading-text">Generating Image ...</span>
+                    <span class="image-container__loading-text">
+                        Generating Image...
+                    </span>
                 </div>
             </section>
         </div>
     </main>
-
     <script src="script.js"></script>
 </body>
 
