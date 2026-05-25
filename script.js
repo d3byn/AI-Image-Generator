@@ -1,95 +1,107 @@
-const API_KEY = {YOUR API KEY};
-const API_URL = 'https://api.vyro.ai/v2/image/generations';
+const API_KEY = 'a1530bedd0msh34898b2f1df6118p1420fajsnc13eae01c858';
+const API_URL ='https://ai-text-to-image-generator-flux-free-api.p.rapidapi.com/aaaaaaaaaaaaaaaaaiimagegenerator/quick.php';
 
 const imageContainer = document.getElementById('imageContainer');
+
 const imageResultElement = document.getElementById('imageResult');
 
-function generateImage() {
-    let promptValue;
-    let styleValue;
-    let ratioValue;
+async function generateImage() {
 
-    try {
-        promptValue = document.getElementById('prompt').value;
-        styleValue = document.getElementById('dropdownStyles').value;
-        ratioValue = document.getElementById('dropdownRatio').value;
-        if (!promptValue) {
-            throw new Error("Prompt is required");
-        }
-        console.log(promptValue);
-        console.log(styleValue);
-        console.log(ratioValue);
-    } catch (err) {
-        console.error(err);
-        alert("Enter proper values for all fields");
+    const promptValue = document.getElementById('prompt').value.trim();
+    const styleValue = document.getElementById('dropdownStyles').value;
+    const ratioValue = document.getElementById('dropdownRatio').value;
+
+    if (!promptValue) {
+        alert('Please enter a prompt');
         return;
     }
-
     setLoadingState(true);
+    try {
+        let styleId = 1;
+        if (styleValue === 'anime') {
+            styleId = 4;
+        } else if (styleValue === 'realism') {
+            styleId = 1;
+        }
 
-    //Form data for API request
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + API_KEY);
+        let imageSize = '1-1';
+        if (ratioValue === 'landscape_16_9') {
+            imageSize = '16-9';
+        } else if (ratioValue === 'portrait_9_16') {
+            imageSize = '9-16';
+        }
 
-    const formData = new FormData();
-    formData.append("prompt", promptValue);
-    formData.append("style", styleValue);
-    formData.append("aspect_ratio", ratioValue);
-    formData.append("seed", "5");
+        const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'x-rapidapi-key': API_KEY,
+                    'x-rapidapi-host': 'ai-text-to-image-generator-flux-free-api.p.rapidapi.com',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt: promptValue,
+                    style_id: styleId,
+                    size: imageSize
+                })
+            });
 
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: formData,
-        redirect: "follow"
-    };
+        const data = await response.json();
+        console.log('FULL API RESPONSE:', data);
 
-    fetch(API_URL, requestOptions)
-        .then(async (response) => {
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.log(errorText);
-                throw new Error("Failed to generate image");
-            }
-            return response.blob();
-        })
-        .then((blob) => {
-            const imageUrl = URL.createObjectURL(blob);
-            imageResultElement.src = imageUrl;
-            imageResultElement.style.display = 'block';
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            alert("Image generation failed.");
-        })
-        .finally(() => {
-            setLoadingState(false);
-        });
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                'Failed to generate image'
+            );
+        }
+        const imageUrl =
+            data?.final_result?.[0]?.origin ||
+            data?.final_result?.[0]?.image ||
+            data?.final_result?.[0]?.url ||
+            data?.image ||
+            data?.url;
+
+        console.log('Image URL:', imageUrl);
+
+        if (!imageUrl) {
+            throw new Error(
+                'No image URL returned from API'
+            );
+        }
+
+        imageResultElement.src = imageUrl;
+        imageResultElement.style.display = 'block';
+
+        console.log('Image generated successfully!');
+
+    } catch (error) {
+        console.error(error);
+        alert( error.message ||'Image generation failed');
+
+    } finally {
+        setLoadingState(false);
+    }
 }
 
 function setLoadingState(isLoading) {
     if (isLoading) {
-        imageResultElement.style.display = 'none';
         imageContainer.classList.add('loading');
-    }
-    else {
-        imageResultElement.style.display = 'block';
+    } else {
         imageContainer.classList.remove('loading');
     }
-
 }
 
 function downloadImage() {
-    const imageUrl = imageResultElement.src;
-
+    const imageUrl =imageResultElement.src;
     if (!imageUrl) {
-        alert("No image to download. Please generate an image first.");
+        alert('No image available');
         return;
     }
 
     const link = document.createElement('a');
-    link.href = imageUrl;
-    link.download = 'ai-generated_image.jpg';
+    link.href =imageUrl;
+    link.download ='ai-generated-image.jpg';
+    document.body.appendChild(link);
     link.click();
 
 }
