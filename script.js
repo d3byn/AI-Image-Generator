@@ -103,5 +103,6 @@ function downloadImage() {
     link.download ='ai-generated-image.jpg';
     document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
 
 }
